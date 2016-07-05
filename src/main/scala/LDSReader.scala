@@ -20,18 +20,21 @@ import scala.io.StdIn
 import LDSParser._
 
 object LDSReader extends LDSParser {
-  def main(args: Array[String]) {
+  def printTitle() {
     println("Search recent messages by the Prophet and Apostles")
     println("To download a talk paste the link into the search and press enter")
     print("Updating database! This can take a while...")
+  }
+
+  def main(args: Array[String]) {
+    printTitle()
 
     val db = updateDatabase()
-
     println("Done!")
 
     while(true) {
       print("\nSearch (Type 'exit' to quit): ")
-      val s: Option[String] = Some(StdIn.readLine())
+      val s: Option[String]                 = Some(StdIn.readLine())
       s match {
         case s if s.get.trim.isEmpty        => None
         case s if s.get.trim.startsWith(pl) => downloadPDF(s.get)

@@ -24,26 +24,26 @@ import java.io.File
 import sys.process._
 
 trait LDSReaderUtil {
-  val pl = "https://www.lds.org"
+  val pl            = "https://www.lds.org"
   def updateDatabase(): Map[String,String]
-  def downloadPDF(url: String)
+  def downloadPDF(url:  String)
 }
 
 case class LDSParser() extends LDSReaderUtil {
   private def savePDF(pdfLink: String) {
-    val pdfName = pdfLink.split("/")
+    val pdfName      = pdfLink.split("/")
 
     println("Found PDF. Downloading to " + pdfName.last)
     new URL(pdfLink) #> new File(pdfName.last) !!
   }
 
   def updateDatabase(): Map[String,String] = {
-    val url    = "https://www.lds.org/tools/rss?lang=eng&location=articles" +
-                 "&uri=/prophets-and-apostles/recent-messages"
-    val xml    = XML.load(url)
-    val items  = xml \\ "channel" \\ "item"
-    val titles = (items \\ "title").map(_.text.trim)
-    val links  = (items \\ "link").map(_.text.trim)
+    val url         = "https://www.lds.org/tools/rss?lang=eng&location=" +
+                      "articles&uri=/prophets-and-apostles/recent-messages"
+    val xml         = XML.load(url)
+    val items       = xml \\ "channel" \\ "item"
+    val titles      = (items \\ "title").map(_.text.trim)
+    val links       = (items \\ "link").map(_.text.trim)
 
     (titles zip links).toMap
   }
@@ -58,7 +58,6 @@ case class LDSParser() extends LDSReaderUtil {
       val linkTitle = e.getAttributeByName("title")
       if (linkTitle != null && linkTitle.equalsIgnoreCase("PDF")) {
         val pdfLink = Seu.unescapeHtml4(e.getAttributeByName("href").toString)
-
         savePDF(pdfLink)
       }
     }
