@@ -21,7 +21,7 @@ import LDSParser._
 
 object LDSReader extends LDSParser {
   /*****************************************************************************
-   ** User output to the console at start of program
+   ** User output functions
    ****************************************************************************/
   def printTitle() {
     println("Search recent messages by the Prophet and Apostles")
@@ -29,14 +29,15 @@ object LDSReader extends LDSParser {
     print("Updating database! This can take a while...")
   }
 
+  def results(t: String, l: String) =
+    println(Console.BOLD + t + Console.RESET + "\n" +
+      Console.UNDERLINED + l + Console.RESET + "\n")
+
   /*****************************************************************************
    ** Functions for searching the db
    ****************************************************************************/
   def matches(k: String, s: Option[String]): Boolean =
     k.toUpperCase.contains(s.get.trim.toUpperCase)
-
-  def results(t: String, l: String) =
-    println(Console.BOLD + t + Console.RESET + "\n" + l)
 
   /*****************************************************************************
    ** Entry point of the program
