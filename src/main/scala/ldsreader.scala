@@ -29,8 +29,8 @@ object ldsreader {
     val element     = html.getElementsByName("a", true)
 
     for (elem <- element) {
-      val linkClass = elem.getAttributeByName("title")
-      if (linkClass != null && linkClass.equalsIgnoreCase("PDF")) {
+      val linkTitle = elem.getAttributeByName("title")
+      if (linkTitle != null && linkTitle.equalsIgnoreCase("PDF")) {
         val pdfLink = StringEscapeUtils.unescapeHtml4(
           elem.getAttributeByName("href").toString)
         val pdfName = pdfLink.split("/")
