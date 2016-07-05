@@ -30,6 +30,15 @@ object LDSReader extends LDSParser {
   }
 
   /*****************************************************************************
+   ** Functions for searching the db
+   ****************************************************************************/
+  def matches(k: String, s: Option[String]): Boolean =
+    k.toUpperCase.contains(s.get.trim.toUpperCase)
+
+  def results(t: String, l: String) =
+    println(Console.BOLD + t + Console.RESET + "\n" + l)
+
+  /*****************************************************************************
    ** Entry point of the program
    ****************************************************************************/
   def main(args: Array[String]) {
@@ -47,8 +56,7 @@ object LDSReader extends LDSParser {
         case s if s.get.trim.isEmpty        => None
         case s if s.get.trim.startsWith(pl) => downloadPDF(s.get)
         case Some("exit")                   => System.exit(1)
-        case _ => db.filterKeys(_.toUpperCase.contains(s.get.trim.toUpperCase))
-                               .foreach(x => println(x._1 + "\n" + x._2 + "\n"))
+        case _ => db.filterKeys(matches(_, s)).foreach(x => results(x._1, x._2))
       }
     }
   }
