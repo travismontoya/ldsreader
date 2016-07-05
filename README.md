@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/travismontoya/ldsreader.svg?branch=master)](https://travis-ci.org/travismontoya/ldsreader)
-ldsreader
+LDSReader
 =========
 Search the Prophet and Apostles recent messages and download the pdf content.
 
@@ -10,7 +10,7 @@ This project uses sbt to manage the project. It makes it very simple to run, com
 ##### To package as a jar file
 ```
 ldsreader tmontoya$ sbt package
-ldsreader tmontoya$ scala target/scala-2.11/ldsreader_2.11-1.0.jar
+ldsreader tmontoya$ scala target/scala-2.11/LDSReader_2.11-1.0.jar
 ```
 
 ##### To run the program through sbt
