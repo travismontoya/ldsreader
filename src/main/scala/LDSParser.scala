@@ -24,12 +24,14 @@ import java.io.File
 import sys.process._
 
 trait LDSReaderUtil {
-  val pl            = "https://www.lds.org"
   def updateDatabase(): Map[String,String]
-  def downloadPDF(url:  String)
+  def downloadPDF(url: String)
 }
 
 case class LDSParser() extends LDSReaderUtil {
+  /*****************************************************************************
+   ** Save the parsed pdf link to the local System
+   ****************************************************************************/
   private def savePDF(pdfLink: String) {
     val pdfName      = pdfLink.split("/")
 
@@ -37,6 +39,9 @@ case class LDSParser() extends LDSReaderUtil {
     new URL(pdfLink) #> new File(pdfName.last) !!
   }
 
+  /*****************************************************************************
+   ** Read the current RSS feed from lds.org
+   ****************************************************************************/
   def updateDatabase(): Map[String,String] = {
     val url         = "https://www.lds.org/tools/rss?lang=eng&location=" +
                       "articles&uri=/prophets-and-apostles/recent-messages"
@@ -48,9 +53,11 @@ case class LDSParser() extends LDSReaderUtil {
     (titles zip links).toMap
   }
 
+  /*****************************************************************************
+   ** Parse the HTML of the talk link and find the PDF link to download
+   ****************************************************************************/
   def downloadPDF(url: String) {
     val htmlCleaner = new HtmlCleaner
-    val cleanerProp = htmlCleaner.getProperties
     val html        = htmlCleaner.clean(new URL(url))
     val element     = html.getElementsByName("a", true)
 

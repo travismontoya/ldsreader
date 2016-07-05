@@ -20,16 +20,24 @@ import scala.io.StdIn
 import LDSParser._
 
 object LDSReader extends LDSParser {
+  /*****************************************************************************
+   ** User output to the console at start of program
+   ****************************************************************************/
   def printTitle() {
     println("Search recent messages by the Prophet and Apostles")
     println("To download a talk paste the link into the search and press enter")
     print("Updating database! This can take a while...")
   }
 
+  /*****************************************************************************
+   ** Entry point of the program
+   ****************************************************************************/
   def main(args: Array[String]) {
     printTitle()
 
+    val pl = "https://www.lds.org"
     val db = updateDatabase()
+
     println("Done!")
 
     while(true) {
