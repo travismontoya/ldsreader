@@ -3,10 +3,17 @@ ldsreader
 =========
 Search the Prohphet and Apostles recent messages and download the pdf content.
 
-#### Usage
+### Usage
 
-The project uses sbt
+This project uses sbt to manage the project. It makes it very simple to run, compile or package it as a jar file.
 
+##### To package as a jar file
+```
+ldsreader tmontoya$ sbt package
+ldsreader tmontoya$ scala target/scala-2.11/ldsreader_2.11-1.0.jar
+```
+
+##### To run the program through sbt
 ```
 ldsreader tmontoya$ sbt run
 ......
