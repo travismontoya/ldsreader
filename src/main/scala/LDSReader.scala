@@ -26,7 +26,6 @@ object LDSReader extends LDSParser {
   def printTitle() {
     println("Search recent messages by the Prophet and Apostles")
     println("To download a talk paste the link into the search and press enter")
-    print("Updating database! This can take a while...")
   }
 
   def results(t: String, l: String) =
@@ -36,29 +35,31 @@ object LDSReader extends LDSParser {
   /*****************************************************************************
    ** Functions for searching the db
    ****************************************************************************/
-  def matches(k: String, s: Option[String]): Boolean =
-    k.toUpperCase.contains(s.get.trim.toUpperCase)
+  def matches(k: String, s: String): Boolean =
+    k.toUpperCase.contains(s.toUpperCase)
+
+  def doSearch(db: Map[String, String], s: String) =
+    db.filterKeys(matches(_, s)).foreach(x => results(x._1, x._2))
+
+  def getSearchString(db: Map[String, String]) {
+    print("\nSearch (Type '.exit' to quit): ")
+    val s: Option[String]          = Some(StdIn.readLine())
+    s.get.trim match {
+      case ".updatedb"             => getSearchString(updateDatabase())
+      case ".exit"                 => System.exit(0)
+      case s if s.isEmpty          => None
+      case s if s.startsWith(Site) => downloadPDF(s)
+      case s if !s.isEmpty         => doSearch(db, s)
+      case _                       => getSearchString(db)
+    }
+    getSearchString(db)
+  }
 
   /*****************************************************************************
    ** Entry point of the program
    ****************************************************************************/
   def main(args: Array[String]) {
     printTitle()
-
-    val pl = "https://www.lds.org"
-    val db = updateDatabase()
-
-    println("Done!")
-
-    while(true) {
-      print("\nSearch (Type 'exit' to quit): ")
-      val s: Option[String]                 = Some(StdIn.readLine())
-      s match {
-        case s if s.get.trim.isEmpty        => None
-        case s if s.get.trim.startsWith(pl) => downloadPDF(s.get)
-        case Some("exit")                   => System.exit(1)
-        case _ => db.filterKeys(matches(_, s)).foreach(x => results(x._1, x._2))
-      }
-    }
+    getSearchString(updateDatabase())
   }
 }
