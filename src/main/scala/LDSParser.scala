@@ -25,7 +25,7 @@ import sys.process._
 
 trait LDSReaderUtil {
   val Site = "https://www.lds.org"
-  def updateDatabase(): Map[String,String]
+  def updateDatabase(): Map[String, String]
   def downloadPDF(url: String)
 }
 
@@ -43,7 +43,7 @@ case class LDSParser() extends LDSReaderUtil {
   /*****************************************************************************
    ** Read the current RSS feed from lds.org
    ****************************************************************************/
-  def updateDatabase(): Map[String,String] = {
+  def updateDatabase(): Map[String, String] = {
     print("Updating database! This can take a while...")
 
     val url         = "https://www.lds.org/tools/rss?lang=eng&location=" +

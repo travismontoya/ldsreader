@@ -43,8 +43,8 @@ object LDSReader extends LDSParser {
 
   def getSearchString(db: Map[String, String]) {
     print("\nSearch (Type '.exit' to quit): ")
-    val s: Option[String]          = Some(StdIn.readLine())
-    s.get.trim match {
+    val s: Option[String]          = Some(StdIn.readLine().trim)
+    s get match {
       case ".updatedb"             => getSearchString(updateDatabase())
       case ".exit"                 => System.exit(0)
       case s if s.isEmpty          => None
